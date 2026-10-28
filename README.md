@@ -182,3 +182,7 @@ telegram-batch-downloader/
 - 下载速率受 Telegram 账号限制，提升并发并不能线性加速
 - 去重是文件名启发式，不读取压缩包内容
 - 旧版 `main.py` 桌面界面功能较少，建议使用网页版
+
+## 许可
+
+MIT，见 [LICENSE](LICENSE)。
