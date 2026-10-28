@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vault · Telegram Archive</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=20261026a">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20.5 20.5 16 16"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.6 1.6 0 0 0-1-1.5 1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.6 1.6 0 0 0 1.5-1 1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.2a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.6 1.6 0 0 0-1.4 1Z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+    <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="1"/><rect x="13" y="4" width="7" height="7" rx="1"/><rect x="4" y="13" width="7" height="7" rx="1"/><rect x="13" y="13" width="7" height="7" rx="1"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 4v11"/><path d="m7 11 5 5 5-5"/><path d="M5 20h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 5 5L20 7"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7Z"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v5l3 2"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></symbol>
+  </svg>
+
+  <div id="app" data-auth="pending">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">V</span>
+        <div class="brand-text">
+          <strong>Vault</strong>
+          <span>Telegram archive console</span>
+        </div>
+      </div>
+      <div class="top-actions">
+        <div class="connection" id="connection">
+          <span class="live-dot" id="live-dot"></span>
+          <span id="account-label">正在连接</span>
+        </div>
+        <button class="icon-button" id="theme-toggle" title="切换主题" aria-label="切换主题">
+          <svg class="icon"><use href="#i-moon"/></svg>
+        </button>
+        <button class="ghost-button" id="settings-open">设置</button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="rail">
+        <div class="rail-head">
+          <div>
+            <p class="eyebrow">CHANNELS</p>
+            <p class="rail-count" id="channel-count">0 个频道</p>
+          </div>
+          <button class="icon-button" id="refresh-channels" title="刷新频道" aria-label="刷新频道">
+            <svg class="icon"><use href="#i-refresh"/></svg>
+          </button>
+        </div>
+        <label class="search">
+          <svg class="icon"><use href="#i-search"/></svg>
+          <input id="channel-search" type="search" placeholder="搜索频道或群组" autocomplete="off">
+        </label>
+        <div class="channel-list" id="channel-list"></div>
+        <div class="rail-foot">
+          <button class="text-button" id="subs-open">
+            <svg class="icon"><use href="#i-clock"/></svg>
+            定时追更
+          </button>
+          <button class="text-button" id="open-folder">
+            <svg class="icon"><use href="#i-folder"/></svg>
+            下载目录
+          </button>
+        </div>
+      </aside>
+
+      <section class="stage">
+        <div class="stage-head">
+          <div class="channel-head">
+            <p class="eyebrow">SELECTED CHANNEL</p>
+            <h2 id="channel-name">选择一个频道</h2>
+            <p class="channel-sub" id="channel-sub">从左侧选择频道，加载消息并挑选要下载的内容。</p>
+          </div>
+          <div class="view-switch" role="tablist" aria-label="视图">
+            <button data-view="list" class="active" role="tab">
+              <svg class="icon"><use href="#i-list"/></svg>
+              列表
+            </button>
+            <button data-view="grid" role="tab">
+              <svg class="icon"><use href="#i-grid"/></svg>
+              相册
+            </button>
+          </div>
+        </div>
+
+        <div class="commandbar">
+          <div class="type-chips" id="type-chips"></div>
+          <div class="command-actions">
+            <button class="text-button" id="open-comments" hidden>查看评论</button>
+            <button class="text-button" id="filter-open">
+              <svg class="icon"><use href="#i-filter"/></svg>
+              筛选
+            </button>
+            <button class="text-button" id="load-more">加载更多</button>
+            <button class="text-button" id="load-all">查看全部</button>
+            <button class="text-button" id="dedupe" title="下载前按书名与章节区间去掉重复的旧版本">去重</button>
+            <button class="text-button" id="reorganize" title="按相册/文件名重新整理当前频道已下载文件">整理</button>
+            <label class="page-size">
+              每页
+              <select id="page-size">
+                <option value="100">100</option>
+                <option value="200" selected>200</option>
+                <option value="500">500</option>
+                <option value="1000">1000</option>
+              </select>
+            </label>
+          </div>
+        </div>
+
+        <div class="content" id="content">
+          <div class="empty" id="empty-state">
+            <p class="eyebrow">NO CHANNEL SELECTED</p>
+            <h3>内容在这里沉淀。</h3>
+            <p>选择一个频道后，消息、缩略图与下载状态会出现在这块工作区。</p>
+          </div>
+          <div class="list-wrap" id="list-wrap" hidden>
+            <div class="list-head">
+              <span>选</span><span>类型</span><span>日期</span><span>大小</span><span>名称 / 内容</span><span>状态</span>
+            </div>
+            <div class="message-list" id="message-list"></div>
+          </div>
+          <div class="gallery" id="gallery" hidden></div>
+          <div class="loading-strip" id="loading-strip" hidden>
+            <span class="loading-bar"></span>
+            正在读取消息…
+          </div>
+        </div>
+
+        <div class="actionbar">
+          <div class="selection">
+            <strong id="selected-count">0</strong>
+            <span>已选</span>
+            <span class="mono" id="selected-size">0 B</span>
+          </div>
+          <div class="action-buttons">
+            <button class="text-button" id="select-all">全选</button>
+            <button class="text-button" id="clear-selection">清空</button>
+            <label class="dir-field">
+              <svg class="icon"><use href="#i-folder"/></svg>
+              <input id="download-dir" type="text" spellcheck="false">
+            </label>
+            <label class="conc-field">
+              并发
+              <input id="concurrency" type="number" min="1" max="64" step="1" value="8">
+            </label>
+            <button class="primary-button" id="download-start">
+              <svg class="icon"><use href="#i-download"/></svg>
+              下载选中
+            </button>
+            <button class="danger-button" id="download-stop" disabled>停止</button>
+          </div>
+          <div class="progress-line">
+            <div class="progress-track"><span id="progress-fill"></span></div>
+            <span class="mono" id="progress-label">0%</span>
+          </div>
+        </div>
+      </section>
+
+      <aside class="inspector">
+        <div class="inspector-head">
+          <p class="eyebrow">INSPECTOR</p>
+          <button class="icon-button" id="preview-close" title="关闭预览" aria-label="关闭预览">
+            <svg class="icon"><use href="#i-x"/></svg>
+          </button>
+        </div>
+        <div class="preview-frame" id="preview-frame">
+          <div class="preview-placeholder" id="preview-placeholder">
+            <span class="preview-glyph">◍</span>
+            <p>选择一条消息查看预览</p>
+          </div>
+          <img id="preview-image" alt="" hidden>
+          <video id="preview-video" controls playsinline hidden></video>
+          <audio id="preview-audio" controls hidden></audio>
+        </div>
+        <div class="preview-meta">
+          <h3 id="preview-name">—</h3>
+          <div class="meta-row" id="preview-meta-row">
+            <span id="preview-type">—</span>
+            <span id="preview-size">—</span>
+            <span id="preview-date">—</span>
+          </div>
+          <p class="preview-caption" id="preview-caption"></p>
+          <div class="preview-actions">
+            <button class="primary-button" id="preview-action" disabled>查看大图</button>
+            <button class="ghost-button" id="preview-download" disabled>下载此文件</button>
+          </div>
+        </div>
+        <div class="inspector-foot">
+          <div class="stat"><span>下载记录</span><strong class="mono" id="stat-downloaded">0</strong></div>
+          <div class="stat"><span>当前筛选</span><strong class="mono" id="stat-filtered">0</strong></div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="statusbar">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">正在启动本地服务…</span>
+      <span class="status-right mono" id="status-right"></span>
+    </footer>
+  </div>
+
+  <div class="login-layer" id="login-layer" hidden>
+    <div class="login-brand">
+      <p class="eyebrow">PRIVATE ARCHIVE</p>
+      <h1>Vault<span class="accent">.</span></h1>
+      <p class="lede">一间安静的 Telegram 媒体工作台。连接账号，挑选频道，把值得留下的东西收进本地。</p>
+      <div class="login-status">
+        <span class="live-dot"></span>
+        <span id="login-status-text">等待连接</span>
+      </div>
+    </div>
+    <div class="login-panel">
+      <div class="qr-shell">
+        <img id="qr-image" alt="Telegram 登录二维码" hidden>
+        <div class="qr-empty" id="qr-empty">
+          <span class="qr-spinner"></span>
+          <p>二维码准备中</p>
+        </div>
+      </div>
+      <p class="qr-hint">手机 Telegram → 设置 → 设备 → 关联桌面设备 → 扫描二维码</p>
+      <div class="login-actions">
+        <button class="ghost-button" id="login-refresh">重新生成</button>
+        <button class="ghost-button" id="login-settings">API 设置</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-stack" id="toast-stack"></div>
+
+  <dialog class="modal" id="settings-dialog">
+    <form method="dialog" class="modal-body" id="settings-form">
+      <div class="modal-head">
+        <div><p class="eyebrow">CONFIGURATION</p><h3>连接设置</h3></div>
+        <button class="icon-button" value="cancel" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="form-grid">
+        <label>api_id<input id="set-api-id" inputmode="numeric" placeholder="my.telegram.org 获取"></label>
+        <label>api_hash<input id="set-api-hash" type="password" placeholder="已保存则留空"></label>
+        <label class="span-2">下载目录<input id="set-download-dir" spellcheck="false"></label>
+        <label>并发<input id="set-concurrency" type="number" min="1" max="64" value="8"></label>
+        <label>每页消息<select id="set-page-size"><option>100</option><option>200</option><option>500</option><option>1000</option></select></label>
+      </div>
+      <div class="proxy-block">
+        <label class="switch-row">
+          <input type="checkbox" id="set-classify-enabled">
+          <span class="switch"></span>
+          自动分类（按文件名公共前缀）
+        </label>
+        <p class="form-hint">分卷、分 part 的文件会自动归入以公共前缀命名的子文件夹；没有有效前缀的文件保留在频道目录。</p>
+      </div>
+      <div class="proxy-block">
+        <label class="switch-row">
+          <input type="checkbox" id="set-proxy-enabled">
+          <span class="switch"></span>
+          使用代理
+        </label>
+        <div class="proxy-fields">
+          <select id="set-proxy-type"><option value="socks5">SOCKS5</option><option value="http">HTTP</option></select>
+          <input id="set-proxy-host" placeholder="127.0.0.1">
+          <input id="set-proxy-port" type="number" min="1" max="65535" placeholder="7897">
+        </div>
+        <p class="form-hint">开着 TUN 时可关闭代理；只用系统代理时建议 SOCKS5 127.0.0.1:7897。</p>
+      </div>
+      <div class="modal-actions">
+        <button class="ghost-button" value="cancel">取消</button>
+        <button class="primary-button" id="settings-save" type="button">保存并连接</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal wide" id="dedupe-dialog">
+    <div class="modal-body">
+      <div class="modal-head">
+        <div><p class="eyebrow">DEDUPE</p><h3>下载前去重</h3></div>
+        <button class="icon-button" id="dedupe-close" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <p class="form-hint" id="dedupe-summary"></p>
+      <div class="dedupe-list" id="dedupe-list"></div>
+      <div class="modal-actions">
+        <button class="ghost-button" id="dedupe-unselect" type="button">仅取消重复勾选</button>
+        <button class="ghost-button" id="dedupe-all" type="button">全部下载</button>
+        <button class="primary-button" id="dedupe-download" type="button">去重后下载</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="modal" id="filter-dialog">
+    <form method="dialog" class="modal-body">
+      <div class="modal-head">
+        <div><p class="eyebrow">FILTER</p><h3>缩小范围</h3></div>
+        <button class="icon-button" value="cancel" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <div class="form-grid">
+        <label class="span-2">关键词<input id="f-keyword" placeholder="文件名或描述"></label>
+        <label>日期从<input id="f-date-from" type="date"></label>
+        <label>日期到<input id="f-date-to" type="date"></label>
+        <label>最小 MB<input id="f-size-min" type="number" min="0" step="0.1"></label>
+        <label>最大 MB<input id="f-size-max" type="number" min="0" step="0.1"></label>
+      </div>
+      <label class="switch-row">
+        <input type="checkbox" id="f-undownloaded">
+        <span class="switch"></span>
+        只看未下载
+      </label>
+      <div class="modal-actions">
+        <button class="ghost-button" id="filter-reset" type="button">重置</button>
+        <button class="primary-button" id="filter-apply" type="button">应用筛选</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog class="modal wide" id="subs-dialog">
+    <div class="modal-body">
+      <div class="modal-head">
+        <div><p class="eyebrow">AUTOMATION</p><h3>定时追更</h3></div>
+        <button class="icon-button" id="subs-close" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <p class="form-hint">按设定间隔检查频道新消息，自动下载新增的视频、图片、文件与音频。</p>
+      <div class="subs-add">
+        <select id="subs-channel"></select>
+        <select id="subs-interval">
+          <option value="5">5 分钟</option>
+          <option value="10" selected>10 分钟</option>
+          <option value="30">30 分钟</option>
+          <option value="60">60 分钟</option>
+        </select>
+        <button class="primary-button" id="subs-add">添加频道</button>
+      </div>
+      <div class="subs-list" id="subs-list"></div>
+    </div>
+  </dialog>
+
+  <dialog class="lightbox" id="lightbox">
+    <button class="icon-button lightbox-close" id="lightbox-close" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+    <img id="lightbox-image" alt="">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </dialog>
+
+  <dialog class="modal" id="password-dialog">
+    <form method="dialog" class="modal-body">
+      <div class="modal-head">
+        <div><p class="eyebrow">SECURITY</p><h3>两步验证</h3></div>
+        <button class="icon-button" value="cancel" aria-label="关闭"><svg class="icon"><use href="#i-x"/></svg></button>
+      </div>
+      <p class="form-hint">该账号开启了两步验证，请输入密码完成登录。</p>
+      <label class="full-label">密码<input id="password-input" type="password" autofocus></label>
+      <div class="modal-actions">
+        <button class="ghost-button" value="cancel">取消</button>
+        <button class="primary-button" id="password-submit" type="button">确认</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="dedupe.js?v=20261026b"></script>
+  <script src="app.js?v=20261026b"></script>
+</body>
+</html>

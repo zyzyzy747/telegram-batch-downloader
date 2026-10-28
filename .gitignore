@@ -1,0 +1,15 @@
+# ---- 隐私：绝不入库 ----
+config.json
+*.session
+*.session-journal
+download_history.json
+subscriptions.json
+.env
+
+# ---- Python ----
+__pycache__/
+*.pyc
+*.pyo
+
+# ---- 下载残留 ----
+*.part
